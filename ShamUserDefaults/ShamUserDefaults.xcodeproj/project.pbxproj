@@ -19,6 +19,7 @@
 		7371BF5219B8A115004095DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7371BF3A19B8A115004095DB /* UIKit.framework */; };
 		7371BF5A19B8A115004095DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7371BF5819B8A115004095DB /* InfoPlist.strings */; };
 		7371BF5C19B8A115004095DB /* ShamUserDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7371BF5B19B8A115004095DB /* ShamUserDefaultsTests.m */; };
+		737DADA319BBF27F00ED0F6E /* SLShamUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 737DADA219BBF27F00ED0F6E /* SLShamUserDefaults.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		7371BF5719B8A115004095DB /* ShamUserDefaultsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShamUserDefaultsTests-Info.plist"; sourceTree = "<group>"; };
 		7371BF5919B8A115004095DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7371BF5B19B8A115004095DB /* ShamUserDefaultsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShamUserDefaultsTests.m; sourceTree = "<group>"; };
+		737DADA119BBF27F00ED0F6E /* SLShamUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShamUserDefaults.h; sourceTree = "<group>"; };
+		737DADA219BBF27F00ED0F6E /* SLShamUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLShamUserDefaults.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,8 @@
 				7371BF4619B8A115004095DB /* SLAppDelegate.m */,
 				7371BF4819B8A115004095DB /* Images.xcassets */,
 				7371BF3D19B8A115004095DB /* Supporting Files */,
+				737DADA119BBF27F00ED0F6E /* SLShamUserDefaults.h */,
+				737DADA219BBF27F00ED0F6E /* SLShamUserDefaults.m */,
 			);
 			path = ShamUserDefaults;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				737DADA319BBF27F00ED0F6E /* SLShamUserDefaults.m in Sources */,
 				7371BF4319B8A115004095DB /* main.m in Sources */,
 				7371BF4719B8A115004095DB /* SLAppDelegate.m in Sources */,
 			);
@@ -438,6 +444,7 @@
 				7371BF6119B8A115004095DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7371BF6219B8A115004095DB /* Build configuration list for PBXNativeTarget "ShamUserDefaultsTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +453,7 @@
 				7371BF6419B8A115004095DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
