@@ -7,6 +7,9 @@
 //
 
 #import "SLShamUserDefaults.h"
+#import <objc/runtime.h>
+
+static SLShamUserDefaults *sStandardShamUserDefaults;
 
 @interface SLShamUserDefaults ()
 
@@ -16,14 +19,63 @@
 
 @implementation SLShamUserDefaults
 
-+ (void)load
++ (void)initialize
 {
-    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sStandardShamUserDefaults = [[SLShamUserDefaults alloc] init];
+    });
 }
 
 + (instancetype)sham_standardUserDefaults
 {
-    return nil;
+    return sStandardShamUserDefaults;
+}
+
++ (void)takeOver
+{
+
+    Class userDefaultsClass = [NSUserDefaults class];
+    Class shamUserDefaulsClass = [SLShamUserDefaults class];
+    
+    Method originalMethod = class_getClassMethod(userDefaultsClass, @selector(standardUserDefaults));
+    Method newMethod = class_getClassMethod(shamUserDefaulsClass, @selector(sham_standardUserDefaults));
+    method_exchangeImplementations(originalMethod, newMethod);
+    
+    /*
+     Class dateClass = [NSDate class];
+     
+     // Let’s store the original timeIntervalSinceNow in a safe place
+     IMP originalIMP = class_getMethodImplementation(dateClass, @selector(timeIntervalSinceNow));
+     Method originalMethod = class_getInstanceMethod(dateClass, @selector(timeIntervalSinceNow));
+     const char *typeEncoding = method_getTypeEncoding(originalMethod);
+     BOOL result = class_addMethod(dateClass, @selector(delorean_unmockedTimeIntervalSinceNow), originalIMP, typeEncoding);
+     NSAssert(result, @"Couldn't store the original timeIntervalSinceNow in a safe place");
+
+     
+     
+     
+     TUSwizzleClassMethods(dateClass,
+     @selector(timeIntervalSinceReferenceDate),
+     @selector(delorean_timeIntervalSinceReferenceDate));
+     
+     
+    Method originalMethod = class_getClassMethod(cls, originalSel);
+	Method newMethod = class_getClassMethod(cls, newSel);
+	method_exchangeImplementations(originalMethod, newMethod);
+     
+     
+     */
+}
+
+- (NSInteger)integerForKey:(NSString *)defaultName
+{
+    return [[self.storage objectForKey:defaultName] integerValue];
+}
+
+- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
+{
+    [self.storage setObject:@(value) forKey:defaultName];
 }
 
 /*

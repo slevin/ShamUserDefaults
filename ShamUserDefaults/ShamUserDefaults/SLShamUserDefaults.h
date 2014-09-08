@@ -10,4 +10,6 @@
 
 @interface SLShamUserDefaults : NSUserDefaults
 
++ (void)takeOver;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "SLShamUserDefaults.h"
 
 @interface ShamUserDefaultsTests : XCTestCase
 
@@ -26,9 +27,11 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testShamIsSubstituted
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    [SLShamUserDefaults takeOver];
+    id defaults = [NSUserDefaults standardUserDefaults];
+    XCTAssertEqualObjects([defaults class], [SLShamUserDefaults class], @"standardUserDefaults should return sham.");
 }
 
 @end
