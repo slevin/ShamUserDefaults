@@ -83,25 +83,49 @@ static BOOL sTakenOver;
     [self.storage setObject:@(value) forKey:defaultName];
 }
 
+- (BOOL)boolForKey:(NSString *)defaultName
+{
+    return [[self.storage objectForKey:defaultName] boolValue];
+}
+
+- (void)setBool:(BOOL)value forKey:(NSString *)defaultName
+{
+    [self.storage setObject:@(value) forKey:defaultName];
+}
+
+- (CGFloat)floatForKey:(NSString *)defaultName
+{
+    return [[self.storage objectForKey:defaultName] floatValue];
+}
+
+- (void)setFloat:(float)value forKey:(NSString *)defaultName
+{
+    [self.storage setObject:@(value) forKey:defaultName];
+}
+
+- (id)objectForKey:(NSString *)defaultName
+{
+    return [self.storage objectForKey:defaultName];
+}
+
+- (void)setObject:(id)value forKey:(NSString *)defaultName
+{
+    [self.storage setObject:value forKey:defaultName];
+}
+
 /*
  Registering Defaults
  – registerDefaults:
  Getting Default Values
  – arrayForKey:
- – boolForKey:
  – dataForKey:
  – dictionaryForKey:
- – floatForKey:
- – integerForKey:
  – objectForKey:
  – stringArrayForKey:
  – stringForKey:
  – doubleForKey:
  – URLForKey:
  Setting Default Values
- – setBool:forKey:
- – setFloat:forKey:
- – setInteger:forKey:
  – setObject:forKey:
  – setDouble:forKey:
  – setURL:forKey:
@@ -129,4 +153,14 @@ static BOOL sTakenOver;
  
  */
 
+/* Done
+ – integerForKey:
+ – setInteger:forKey:
+ – setBool:forKey:
+ – setFloat:forKey:
+ – boolForKey:
+ – floatForKey:
+ 
+ 
+ */
 @end
