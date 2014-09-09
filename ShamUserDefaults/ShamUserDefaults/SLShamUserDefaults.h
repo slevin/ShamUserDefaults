@@ -10,6 +10,7 @@
 
 @interface SLShamUserDefaults : NSUserDefaults
 
-+ (void)takeOver;
++ (void)mockStandardUserDefaults;
++ (void)unmockStandardUserDefaults;
 
 @end

@@ -18,7 +18,7 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    [SLShamUserDefaults mockStandardUserDefaults];
 }
 
 - (void)tearDown
@@ -29,9 +29,46 @@
 
 - (void)testShamIsSubstituted
 {
-    [SLShamUserDefaults takeOver];
     id defaults = [NSUserDefaults standardUserDefaults];
     XCTAssertEqualObjects([defaults class], [SLShamUserDefaults class], @"standardUserDefaults should return sham.");
+}
+
+- (void)testDuplicateMockingIsFine
+{
+    [SLShamUserDefaults mockStandardUserDefaults];
+    id defaults = [NSUserDefaults standardUserDefaults];
+    XCTAssertEqualObjects([defaults class], [SLShamUserDefaults class], @"standardUserDefaults should return sham.");
+}
+
+- (void)testUnmocking
+{
+    [SLShamUserDefaults unmockStandardUserDefaults];
+    id defaults = [NSUserDefaults standardUserDefaults];
+    XCTAssertEqualObjects([defaults class], [NSUserDefaults class], @"standardUserDefaults should return original.");
+}
+
+- (void)testDuplicateUnmockingIsFine
+{
+    [SLShamUserDefaults unmockStandardUserDefaults];
+    [SLShamUserDefaults unmockStandardUserDefaults];
+    id defaults = [NSUserDefaults standardUserDefaults];
+    XCTAssertEqualObjects([defaults class], [NSUserDefaults class], @"standardUserDefaults should return original.");
+}
+
+- (void)recmockingIsFine
+{
+    [SLShamUserDefaults unmockStandardUserDefaults];
+    [SLShamUserDefaults mockStandardUserDefaults];
+    id defaults = [NSUserDefaults standardUserDefaults];
+    XCTAssertEqualObjects([defaults class], [ShamUserDefaultsTests class], @"standardUserDefaults should return sham.");
+}
+
+- (void)testIntegerStorage
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:7 forKey:@"integerKey"];
+    NSInteger results = [defaults integerForKey:@"integerKey"];
+    XCTAssertEqual(results, 7, @"integer matches");
 }
 
 @end

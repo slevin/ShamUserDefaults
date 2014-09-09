@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 
 static SLShamUserDefaults *sStandardShamUserDefaults;
+static BOOL sTakenOver;
 
 @interface SLShamUserDefaults ()
 
@@ -23,6 +24,7 @@ static SLShamUserDefaults *sStandardShamUserDefaults;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        sTakenOver = NO;
         sStandardShamUserDefaults = [[SLShamUserDefaults alloc] init];
     });
 }
@@ -32,40 +34,43 @@ static SLShamUserDefaults *sStandardShamUserDefaults;
     return sStandardShamUserDefaults;
 }
 
-+ (void)takeOver
++ (void)mockStandardUserDefaults
 {
+    @synchronized(self) {
+        if (sTakenOver == NO) {
+            [self swapStandardImplementations];
+            sTakenOver = YES;
+        }
+    }
+}
 
++ (void)unmockStandardUserDefaults
+{
+    @synchronized(self) {
+        if (sTakenOver == YES) {
+            [self swapStandardImplementations];
+            sTakenOver = NO;
+        }
+    }
+}
+
++ (void)swapStandardImplementations
+{
     Class userDefaultsClass = [NSUserDefaults class];
     Class shamUserDefaulsClass = [SLShamUserDefaults class];
     
     Method originalMethod = class_getClassMethod(userDefaultsClass, @selector(standardUserDefaults));
     Method newMethod = class_getClassMethod(shamUserDefaulsClass, @selector(sham_standardUserDefaults));
     method_exchangeImplementations(originalMethod, newMethod);
-    
-    /*
-     Class dateClass = [NSDate class];
-     
-     // Let’s store the original timeIntervalSinceNow in a safe place
-     IMP originalIMP = class_getMethodImplementation(dateClass, @selector(timeIntervalSinceNow));
-     Method originalMethod = class_getInstanceMethod(dateClass, @selector(timeIntervalSinceNow));
-     const char *typeEncoding = method_getTypeEncoding(originalMethod);
-     BOOL result = class_addMethod(dateClass, @selector(delorean_unmockedTimeIntervalSinceNow), originalIMP, typeEncoding);
-     NSAssert(result, @"Couldn't store the original timeIntervalSinceNow in a safe place");
+}
 
-     
-     
-     
-     TUSwizzleClassMethods(dateClass,
-     @selector(timeIntervalSinceReferenceDate),
-     @selector(delorean_timeIntervalSinceReferenceDate));
-     
-     
-    Method originalMethod = class_getClassMethod(cls, originalSel);
-	Method newMethod = class_getClassMethod(cls, newSel);
-	method_exchangeImplementations(originalMethod, newMethod);
-     
-     
-     */
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _storage = [[NSMutableDictionary alloc] init];
+    }
+    return self;
 }
 
 - (NSInteger)integerForKey:(NSString *)defaultName
