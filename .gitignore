@@ -6,4 +6,6 @@
 #
 # Pods/
 
-/ShamUserDefaults/ShamUserDefaults.xcodeproj/project.xcworkspace/xcuserdata/slevin.xcuserdatad/UserInterfaceState.xcuserstate
+ShamUserDefaults/ShamUserDefaults.xcodeproj/project.xcworkspace/xcuserdata/**
+ShamUserDefaults/ShamUserDefaults.xcodeproj/xcuserdata/**
+
