@@ -12,5 +12,6 @@
 
 + (void)mockStandardUserDefaults;
 + (void)unmockStandardUserDefaults;
++ (void)clearAll;
 
 @end
