@@ -4,6 +4,7 @@ nsurl is wrong (there's much more logic to it)
   its not a native type so there needs to be translating to/from nsdata?
 
 
+test receive notification
 
 
 could/should use jrswizzle and pods or is that too many dependencies?
